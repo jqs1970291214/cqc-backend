@@ -1,5 +1,6 @@
 package com.cqc.backend.controller;
 
+import com.cqc.backend.model.UserInfo;
 import com.cqc.backend.service.UserService;
 import com.cqc.backend.viewmodel.ApiResult;
 import com.cqc.backend.viewmodel.MapResult;
@@ -32,6 +33,23 @@ public class UserController {
         }
         userService.createNewAccount(user,pwd);
         mapResult.put("message","success!");
+        return mapResult;
+    }
+
+    @RequestMapping("/getuser")
+    @ResponseBody
+    public ApiResult getUser(@RequestParam("user") String user){
+        MapResult mapResult = new MapResult();
+        UserInfo userInfo = null;
+        if (!user.isEmpty()) userInfo = userService.getUser(user);
+        if(userInfo != null) {
+            mapResult.put("userinfo",userInfo);
+            mapResult.put("message","user found");
+        } else {
+            mapResult.setStatus(404);
+            mapResult.put("message", "user not found");
+        }
+
         return mapResult;
     }
 }

@@ -22,4 +22,9 @@ public class UserServiceImpl implements UserService {
         // 调用持久层，完成数据的保存
         return userRepository.save(userInfo);
     }
+
+    public UserInfo getUser(String user){
+        UserInfo userInfo = userRepository.findOneByUsername(user);
+        return userInfo;
+    }
 }

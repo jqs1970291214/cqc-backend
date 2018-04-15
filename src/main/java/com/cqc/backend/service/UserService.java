@@ -8,5 +8,6 @@ import com.cqc.backend.model.UserInfo;
  * des:
  */
 public interface UserService {
-    public UserInfo createNewAccount(String user, String pwd);
+    UserInfo createNewAccount(String user, String pwd);
+    UserInfo getUser(String user);
 }

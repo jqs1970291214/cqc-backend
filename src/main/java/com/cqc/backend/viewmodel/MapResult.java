@@ -10,8 +10,6 @@ import java.util.Map;
  */
 public class MapResult extends ApiResult {
 
-
-
         private Map<String, Object> data;
 
         public MapResult() {

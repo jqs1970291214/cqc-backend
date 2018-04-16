@@ -3,6 +3,8 @@ package com.cqc.backend.handle;
 import com.cqc.backend.exception.MyException;
 import com.cqc.backend.util.ResultUtil;
 import com.cqc.backend.viewmodel.ApiResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class ExceptionHandle {
 
+     Logger logger = LoggerFactory.getLogger(Exception.class);
     /**
      * 处理业务层异常
      * @return
@@ -40,7 +43,8 @@ public class ExceptionHandle {
         if (e instanceof MyException) {
             apiResult.setMsg(e.getMessage());
         } else {
-            e.printStackTrace(); //输出到控制台或者记录日志，否则会丢失异常信息
+           // e.printStackTrace(); //输出到控制台或者记录日志，否则会丢失异常信息
+            logger.error("系统异常[] {}",e.getMessage());
         }
         return apiResult;
 

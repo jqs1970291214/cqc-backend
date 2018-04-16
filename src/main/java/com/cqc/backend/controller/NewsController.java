@@ -29,16 +29,28 @@ public class NewsController {
     public ApiResult getNewsListByType(@RequestParam("type") String type) {
         ApiResult apiResult = ResultUtil.success();
         List<News> newsList = newsService.getNewsListByType(type);
+        //过滤掉content，只返回列表
+        for(News news : newsList) {
+            news.setContent("");
+        }
         apiResult.put("total",newsList.size());
         apiResult.put("newsList",newsList);
         return apiResult;
     }
 
-    @RequestMapping(value = "/getNewsByTitle",method = RequestMethod.GET)
-    public ApiResult getNews(@RequestParam("title") String title){
-        News news = newsService.getNewsByTitle(title);
+    @RequestMapping(value = "/getNewsById",method = RequestMethod.GET)
+    public ApiResult getNewsById(@RequestParam("id") Integer id) {
+        News news = newsService.getNewsById(id);
         ApiResult apiResult = ResultUtil.success();
         apiResult.put("news",news);
+        return apiResult;
+    }
+
+    @RequestMapping(value = "/getNewsByTitle",method = RequestMethod.GET)
+    public ApiResult getNewsByTitle(@RequestParam("title") String title){
+        News news = newsService.getNewsByTitle(title);
+        ApiResult apiResult = ResultUtil.success();
+       // apiResult.put("news",news);
         return apiResult;
 
     }
@@ -56,7 +68,7 @@ public class NewsController {
     @RequestMapping(value = "/addNews",method = RequestMethod.POST)
     public ApiResult addNews(@RequestParam("title") String title,@RequestParam("type") String type,
                              @RequestParam("cover") String cover,
-                             @RequestParam("editor1") String content) {
+                             @RequestParam("content") String content) {
 
         if(StringUtils.isEmpty(title) || StringUtils.isEmpty(type)) {
             ApiResult apiResult = ResultUtil.error(ResultEnum.PARAM_EMPTY);
@@ -66,10 +78,11 @@ public class NewsController {
             news.setTitle(title);
             news.setType(type);
             news.setContent(content);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM月dd");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String time = simpleDateFormat.format(new Date());
             news.setTime(time);
             news.setCover(cover);
+            if(StringUtils.isEmpty()) news.getCover("#");
             newsService.addNews(news);
             return ResultUtil.success();
         }

@@ -20,7 +20,14 @@ public class NewsService {
     @Autowired
     NewsRepository newsRepository;
 
-
+    public News getNewsById(Integer id) {
+        News news = newsRepository.findOneById(id);
+        if (news != null) {
+            return news;
+        } else {
+            throw new MyException(ResultEnum.NOT_FOUND);
+        }
+    }
 
     public List<News> getNewsListByType(String type) {
         List<News> newsList = newsRepository.findAllByType(type);

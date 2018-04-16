@@ -15,7 +15,7 @@ import java.io.Serializable;
 /**
  * author:Junqson
  * create:2018/4/14 20:00
- * des: 新闻实体类
+ * des: 信息实体类
  */
 @Entity
 @Table(name = "news")
@@ -27,7 +27,10 @@ public class News implements Serializable{
     @Id @GeneratedValue
     private Integer id;
     private String title;
+    private String time;
     private String type;
+    private String cover;
     private String content;
+
 
 }

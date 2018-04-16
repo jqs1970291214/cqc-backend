@@ -1,9 +1,14 @@
 package com.cqc.backend.service;
 
+import com.cqc.backend.exception.MyException;
+import com.cqc.backend.handle.ExceptionHandle;
 import com.cqc.backend.model.News;
 import com.cqc.backend.repository.NewsRepository;
+import com.cqc.backend.util.ResultEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * author:Junqson
@@ -15,7 +20,40 @@ public class NewsService {
     @Autowired
     NewsRepository newsRepository;
 
+
+
+    public List<News> getNewsListByType(String type) {
+        List<News> newsList = newsRepository.findAllByType(type);
+        return newsList;
+    }
+
+    public News deleteByTitle(String title){
+        News news =  newsRepository.findOneByTitle(title);
+        if (news != null) {
+            newsRepository.deleteById(news.getId());
+            return news;
+        } else {
+            throw new MyException(ResultEnum.NOT_FOUND);
+        }
+    }
+
+
+    public News getNewsByTitle(String title){
+        News news = newsRepository.findOneByTitle(title);
+        if (news != null) {
+            return news;
+        } else {
+            throw new MyException(ResultEnum.NOT_FOUND);
+        }
+
+    }
+
+
     public void addNews(News news) {
-        newsRepository.save(news);
+        if (newsRepository.findOneByTitle(news.getTitle()) != null) {
+            throw new MyException(ResultEnum.RECORD_EXISTS);
+        } else {
+            newsRepository.save(news);
+        }
     }
 }

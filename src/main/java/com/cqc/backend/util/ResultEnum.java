@@ -1,4 +1,4 @@
-package com.cqc.backend;
+package com.cqc.backend.util;
 
 import org.omg.CORBA.UNKNOWN;
 
@@ -10,7 +10,10 @@ import org.omg.CORBA.UNKNOWN;
 public enum ResultEnum {
 
     SUCCESS(200,"success"),
-    UNKNOWN_ERROR(404,"error");
+    UNKNOWN_ERROR(400,"error"),
+    NOT_FOUND(401,"not found"),
+    RECORD_EXISTS(402,"record exists"),
+    PARAM_EMPTY(403,"param is empty");
 
     private Integer status;
     private String msg;

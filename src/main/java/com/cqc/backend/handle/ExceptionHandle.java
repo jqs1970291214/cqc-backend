@@ -1,13 +1,12 @@
 package com.cqc.backend.handle;
 
+import com.cqc.backend.exception.MyException;
+import com.cqc.backend.util.ResultUtil;
 import com.cqc.backend.viewmodel.ApiResult;
-import com.cqc.backend.viewmodel.MapResult;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Map;
 
 /**
  * author:Junqson
@@ -16,6 +15,19 @@ import java.util.Map;
  */
 @ControllerAdvice
 public class ExceptionHandle {
+
+    /**
+     * 处理业务层异常
+     * @return
+     *//*
+    @ExceptionHandler(value = MyException.class)
+    public ApiResult handleServiceException(MyException e){
+        ApiResult apiResult = ResultUtil.error();
+        apiResult.setMsg(e.getMessage());
+        return apiResult;
+    }
+*/
+
     /**
      * 处理系统异常
      * @param e
@@ -24,15 +36,18 @@ public class ExceptionHandle {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public ApiResult handle(Exception e) {
-        ApiResult apiResult = ApiResult.error();
-        apiResult.setMsg(e.getMessage());
+        ApiResult apiResult = ResultUtil.error();
+        if (e instanceof MyException) {
+            apiResult.setMsg(e.getMessage());
+        } else {
+            e.printStackTrace(); //输出到控制台或者记录日志，否则会丢失异常信息
+        }
         return apiResult;
+
+
     }
 
-    /*处理业务层异常*/
-    public ApiResult handleServiceException(){
-        return null;
-    }
+
 
     /*处理接口数据和数据绑定异常*/
     public ApiResult handleDataException(){

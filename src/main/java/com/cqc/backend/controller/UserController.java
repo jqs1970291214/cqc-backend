@@ -3,7 +3,6 @@ package com.cqc.backend.controller;
 import com.cqc.backend.model.UserInfo;
 import com.cqc.backend.service.UserService;
 import com.cqc.backend.viewmodel.ApiResult;
-import com.cqc.backend.viewmodel.MapResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +16,7 @@ import java.util.Map;
  * create:2018/4/14 1:11
  * des:
  */
+/*
 @Controller
 public class UserController {
     @Autowired
@@ -53,3 +53,4 @@ public class UserController {
         return mapResult;
     }
 }
+*/

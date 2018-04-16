@@ -2,7 +2,6 @@ package com.cqc.backend.controller;
 
 import com.cqc.backend.service.UserService;
 import com.cqc.backend.viewmodel.ApiResult;
-import com.cqc.backend.viewmodel.MapResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,10 +17,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class IndexController {
+
+    /**
+     * 模板首页
+     * @return
+     */
     @RequestMapping(path = {"/","index"})
     public String index(){
         return "index";
     }
+
+
 
     @RequestMapping("/admin")
     public String admin(@RequestParam("pass") String password){
@@ -31,7 +37,7 @@ public class IndexController {
             return "error";
         }
     }
-    @RequestMapping("/token")
+  /*  @RequestMapping("/token")
     @ResponseBody
     public String getToken(){
         String token = "I am token";
@@ -41,5 +47,5 @@ public class IndexController {
         return result;
 
     }
-
+*/
 }

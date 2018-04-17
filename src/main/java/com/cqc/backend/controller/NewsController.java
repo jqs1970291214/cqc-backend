@@ -25,6 +25,10 @@ public class NewsController {
     @Autowired
     NewsService newsService;
 
+
+    /*
+    @CrossOrigin 粒度跨域
+    */
     @RequestMapping(value = "/newsList")
     public ApiResult getNewsListByType(@RequestParam("type") String type) {
         ApiResult apiResult = ResultUtil.success();
@@ -82,7 +86,7 @@ public class NewsController {
             String time = simpleDateFormat.format(new Date());
             news.setTime(time);
             news.setCover(cover);
-            if(StringUtils.isEmpty()) news.getCover("#");
+            if(StringUtils.isEmpty(cover)) news.setCover("#");
             newsService.addNews(news);
             return ResultUtil.success();
         }

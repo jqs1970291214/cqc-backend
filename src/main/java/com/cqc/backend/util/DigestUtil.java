@@ -1,5 +1,5 @@
-package cn.tekm.util;
 
+package com.cqc.backend.util;
 import org.apache.shiro.codec.Hex;
 import org.apache.shiro.crypto.AesCipherService;
 

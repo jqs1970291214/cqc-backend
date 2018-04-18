@@ -41,6 +41,7 @@ public class ExceptionHandle {
     public ApiResult handle(Exception e) {
         ApiResult apiResult = ResultUtil.error();
         if (e instanceof MyException) {
+            apiResult.setStatus(((MyException) e).getStatus());
             apiResult.setMsg(e.getMessage());
         } else {
            // e.printStackTrace(); //输出到控制台或者记录日志，否则会丢失异常信息

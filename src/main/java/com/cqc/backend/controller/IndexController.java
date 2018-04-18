@@ -1,13 +1,19 @@
 package com.cqc.backend.controller;
 
 import com.cqc.backend.service.UserService;
+import com.cqc.backend.util.ResultUtil;
 import com.cqc.backend.viewmodel.ApiResult;
+import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
 
 /**
  * author:Junqson
@@ -30,12 +36,21 @@ public class IndexController {
 
 
     @RequestMapping("/admin")
-    public String admin(@RequestParam("pass") String password){
+    public String admin(@RequestParam("pass") String password, HttpSession session, Model model){
+        /*session.removeAttribute("login");*/
+        ApiResult apiResult = ResultUtil.success();
         if("chuangqingchun".equals(password)) {
+            session.setAttribute("login","ok");
             return "admin";
-        }else {
+        } else {
+            session.setAttribute("login","notok");
+            apiResult.setStatus(400);
+            apiResult.setMsg("pass is wrong");
+            model.addAttribute("result",apiResult);
             return "error";
         }
+
+
     }
   /*  @RequestMapping("/token")
     @ResponseBody

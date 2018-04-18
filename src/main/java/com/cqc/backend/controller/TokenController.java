@@ -14,7 +14,6 @@ public class TokenController {
         String accessKey = "T9Du02GF9lmJYw8uZbAZENKRGes7F7SL9oQWCCLR";
         String secretKey = "2t5iRSfiUlCJLEJSCFOLKv_ZurmMliQoIFZgbXGe";
         String bucket = "sdcqc";
-
         Auth auth = Auth.create(accessKey, secretKey);
         String upToken = auth.uploadToken(bucket);
         /*String result = "var uptoken ="+ "\""+upToken+"\"";*/

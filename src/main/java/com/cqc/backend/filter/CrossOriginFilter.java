@@ -35,7 +35,6 @@ public class CrossOriginFilter implements Filter {
             HttpServletRequest request = (HttpServletRequest) req;
             HttpServletResponse response = (HttpServletResponse) res;
             String origin = request.getHeader("Origin");
-            log.info("cros filter called! url = " + request.getRequestURI());
             response.setHeader("Access-Control-Allow-Origin", origin);
             response.setHeader("Access-Control-Allow-Methods",
 

@@ -6,10 +6,7 @@ import lombok.Generated;
 import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Bean;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -23,8 +20,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 
-public class News implements Serializable{
-    @Id @GeneratedValue
+public class News{
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Integer id;
     private String title;
     private String time;
@@ -32,5 +30,16 @@ public class News implements Serializable{
     private String cover;
     private String content;
 
+    /**
+     *无content构造方法
+     */
+    public News(Integer id,String title,String time,String type,String cover){
+        this.id = id;
+        this.title = title;
+        this.time = time;
+        this.type = type;
+        this.cover = cover;
+        this.content = "";
+    }
 
 }

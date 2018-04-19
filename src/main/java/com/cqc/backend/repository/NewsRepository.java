@@ -17,6 +17,7 @@ public interface NewsRepository extends JpaRepository<News,Integer>{
     News findOneByTitle(String title);
     List<News> findAllByType(String type);
     News findOneById(Integer id);
-    //deleteById已经实现
+
+
 
 }

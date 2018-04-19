@@ -1,7 +1,6 @@
 package com.cqc.backend.service;
 
 import com.cqc.backend.exception.MyException;
-import com.cqc.backend.handle.ExceptionHandle;
 import com.cqc.backend.model.News;
 import com.cqc.backend.repository.NewsRepository;
 import com.cqc.backend.util.ResultEnum;
@@ -57,7 +56,8 @@ public class NewsService {
 
 
     public void addNews(News news) {
-        if (newsRepository.findOneByTitle(news.getTitle()) != null) {
+        News ano = newsRepository.findOneByTitle(news.getTitle());
+        if (ano != null && news.getTitle().equals(ano.getTitle())) {
             throw new MyException(ResultEnum.RECORD_EXISTS);
         } else {
             newsRepository.save(news);

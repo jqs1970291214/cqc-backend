@@ -2,17 +2,237 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Hello World!</title>
-    <script src="https://unpkg.com/wangeditor@3.1.1/release/wangEditor.min.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Editor demo</title>
+    <!--Jquery-->
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <!--ckeditors-->
+    <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+    <script language="javascript" src="plupload/js/plupload.full.min.js"></script>
+    <!-- Bootstrap -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://v3.bootcss.com/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
 </head>
 <body>
-    <h1>后台管理页面</h1>
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">创青春大赛官网内容发布系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="admin.html"><a href="#">发布</a></li>
+                <li><a href="/del.html">删除</a></li>
+                <li><a href="#contact">关于</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+<!--图片上传表单-->
 
 
-    <script>
+<div class="container theme-showcase" role="main">
+
+    <div id="scode"></div>
+    <form role="form">
+        <!--<p id="scode"></p>-->
+        <div class="form-group">
+            <label for="title">标题</label>
+            <input type="text" id="title" name="1" class="form-control" placeholder="请输入文章标题">
+            <br>
+        </div>
+
+        <div class="form-group">
+            <label for="type">文章类别</label>
+            <select id="type" class="form-control" onchange="typeOnchange()">
+                <option value="99">——请选择类别——</option>
+                <option value="0">新闻</option>
+                <option value="1">通知</option>
+                <option value="11">农林、畜牧、食品及相关产业</option>
+                <option value="12">化工技术和环境科学</option>
+                <option value="13">生物医药</option>
+                <option value="14">信息技术和电子商务</option>
+                <option value="15">材料</option>
+                <option value="16">机械能源</option>
+                <option value="17">文化创意和服务咨询</option>
+                <option value="18">公益创业</option>
+            </select>
+        </div>
+    </form>
+    <!--图片上传表单-->
+    <div class="alert alert-info" role="alert" id="hiddencover" style="display:none;" >
+        <div><strong>请上传新闻封面，如无封面，请不要上传，封面将显示默认图片</strong></br></div>
+        <form enctype="multipart/form-data" method="POST" id="uploadForm" role="form" class="form-inline">
+            <input name="token" type="hidden" value="" id="token">
+            <input name="key" type="hidden" id="key" value="">
+            <input name="accept" type="hidden" />
+            <div class="form-group">
+                <input name="file" type="file" id="file" class="form-control" onchange="changeImage()"/>
+            </div>
+
+            <input type="button" value="上传" id="upcover" class="btn btn-primary" onclick="doUpload()" />
+        </form>
+    </div>
+    <!--图片上传结束-->
+    <form role="form">
+        <div class="form-group">
+            <label for="TextArea1">文章内容</label>
+            <textarea id="TextArea1" cols="20" rows="2" class="ckeditor"></textarea>
+        </div>
+    </form>
+    <button class="btn btn-success" id="submit">提交编辑内容</button>
+
+    <!--
+            <p>删除文章</p><br>
+            <select id="deltypeselect">
+                <option  value="0">请选择类别</option>
+                <option value="13">生物医药</option>
+            </select>
+            <button class="btn btn-lg btn-primary" id="delsubmit">获取文章列表</button><br> -->
+</div>
+
+<!--页面js脚本-->
+<script>
+
+    var uptoken;
+    var coverReady;
+    function changeImage(){
+        var path = $("#file").val()
+        var test1 = path.lastIndexOf("/");  //对路径进行截取
+        var test2 = path.lastIndexOf("\\");  //对路径进行截取
+        var test= Math.max(test1, test2)
+        if(test<0){
+            var name = path;
+        }else{
+            var name = path.substring(test + 1)
+        }
+        $("#key").val(name)
+
+        coverReady = name
+    }
+
+    function typeOnchange() {
+        if ($("#type").val()==0){
+            //alert("新闻需要上传封面图片")
+            $("#hiddencover").show("fast")
+        }else{
+            $("#hiddencover").hide("fast")
+            $("#file").val("");
+
+        }
+    }
+    var cover ="#";
+    function doUpload(){
+        var formData = new FormData($("#uploadForm")[0]);
+        $.ajax({
+            url:"http://upload-z2.qiniup.com",
+            type:"POST",
+            data:formData,
+            async:false,
+            cache:false,
+            contentType:false,
+            processData:false,
+            success:function(returndata){
+                console.log(" 封面图片上传成功 图片名"+returndata.key)
+                alert("封面图片上传成功，请勿重复添加");
+                cover = returndata.key;
+
+            },
+            error:function(){
+                alert("请重试或尝试刷新页面后重新上传");
+            }
+        });
+    }
+
+
+    function returnMsg(msg,type){
+        if (type===0) {
+            $("#scode").html("<div class=\"alert alert-success\" role=\"alert\" id=\"#scode\" >"+msg+"</div>");
+            $("#scode").show("fast");
+        }else{
+            $("#scode").html("<div class=\"alert alert-danger\" role=\"alert\" id=\"#scode\" >"+msg+"</div>");
+            $("#scode").show("fast");
+        }
+
+    }
+
+    function arclist(){
+
+    }
+    $(document).ready(function(){
+
+        $("#if").hide()
+
+        $.ajax({
+            type: "GET",
+            url: "http://39.107.237.2:8100/uptoken",
+            async:false,
+            success:function(token){
+                uptoken = token;
+            }
+        })
+
+
+        /*alert(uptoken)*/
+        $("#token").val(uptoken)
+        $("#submit").click(function(){
+            var data = CKEDITOR.instances.TextArea1.getData();
+            var title = document.getElementById("title").value;
+            var type = document.getElementById("type").value;
+            if (cover ==="#") {
+                cover ="cover.jpg"
+            }
+
+            if (type=="99") {
+                alert("请选择类别")
+            }else {
+                $.post("http://39.107.237.2:8100/addNews",
+                    {
+                        content:data,
+                        type:type,
+                        title:title,
+                        cover:"http://p76buwmyf.bkt.clouddn.com/"+cover+"-co"
+                    },
+                    function(result){
+                        console.log("文章提交状态："+result.msg+" "+result.status)
+                        if(result.msg=="success"){
+                            $("#title").val("");
+                            $("#type").val("99");
+                            CKEDITOR.instances.TextArea1.setData('');
+                            $("#file").val("");
+                            $("#hiddencover").hide("fast")
+                            returnMsg("添加成功,请继续添加",0)
+                        }else {
+                            returnMsg("添加失败。错误信息:"+result.status+" "+result.msg,1)
+                        }
+                    },"json")
+
+            }
+        })
+    })
 
 
 
-    </script>
+</script>
+
 </body>
+
 </html>

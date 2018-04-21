@@ -14,7 +14,8 @@ public enum ResultEnum {
     NOT_FOUND(401,"not found"),
     RECORD_EXISTS(402,"record exists"),
     PARAM_EMPTY(403,"param is empty"),
-    LOGIN_REQUIRED(404,"you need to log in first");
+    LOGIN_REQUIRED(404,"you need to log in first"),
+    PASS_ERROR(405,"password is wrong or empty");
 
     private Integer status;
     private String msg;

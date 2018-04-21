@@ -1,35 +1,35 @@
 Manifest-Version: 1.0
-Class-Path: HikariCP-2.7.8.jar spring-boot-starter-web-2.0.1.RELEASE.j
- ar slf4j-api-1.7.25.jar happy-dns-java-0.1.6.jar log4j-to-slf4j-2.10.
- 0.jar thymeleaf-spring5-3.0.9.RELEASE.jar spring-data-jpa-2.0.6.RELEA
- SE.jar jackson-annotations-2.9.0.jar spring-core-5.0.5.RELEASE.jar ja
- ckson-core-2.9.5.jar commons-lang3-3.4.jar spring-jdbc-5.0.5.RELEASE.
- jar thymeleaf-3.0.9.RELEASE.jar hibernate-jpa-2.1-api-1.0.0.Final.jar
-  logback-classic-1.2.3.jar spring-boot-starter-thymeleaf-2.0.1.RELEAS
- E.jar spring-boot-2.0.1.RELEASE.jar jackson-datatype-jdk8-2.9.5.jar l
- ombok-1.16.20.jar qiniu-java-sdk-7.2.11.jar log4j-api-2.10.0.jar jack
- son-module-parameter-names-2.9.5.jar hibernate-core-5.2.16.Final.jar 
- hibernate-commons-annotations-5.0.1.Final.jar hibernate-validator-6.0
- .9.Final.jar javax.transaction-api-1.2.jar spring-orm-5.0.5.RELEASE.j
- ar spring-boot-starter-json-2.0.1.RELEASE.jar spring-web-5.0.5.RELEAS
- E.jar thymeleaf-extras-java8time-3.0.1.RELEASE.jar jandex-2.0.3.Final
- .jar jul-to-slf4j-1.7.25.jar attoparser-2.0.4.RELEASE.jar tomcat-embe
- d-el-8.5.29.jar spring-aop-5.0.5.RELEASE.jar classmate-1.3.4.jar dom4
- j-1.6.1.jar spring-expression-5.0.5.RELEASE.jar gson-2.8.2.jar spring
- -jcl-5.0.5.RELEASE.jar spring-boot-starter-logging-2.0.1.RELEASE.jar 
- spring-beans-5.0.5.RELEASE.jar spring-context-5.0.5.RELEASE.jar commo
- ns-beanutils-1.8.3.jar spring-boot-starter-2.0.1.RELEASE.jar spring-b
- oot-starter-data-jpa-2.0.1.RELEASE.jar okhttp-3.9.1.jar joda-time-2.9
- .4.jar okio-1.13.0.jar jackson-databind-2.9.5.jar spring-data-commons
- -2.0.6.RELEASE.jar javax.annotation-api-1.3.2.jar shiro-core-1.2.4.ja
- r snakeyaml-1.19.jar unbescape-1.1.5.RELEASE.jar javassist-3.22.0-GA.
- jar spring-tx-5.0.5.RELEASE.jar spring-webmvc-5.0.5.RELEASE.jar antlr
- -2.7.7.jar logback-core-1.2.3.jar spring-boot-starter-jdbc-2.0.1.RELE
- ASE.jar jackson-datatype-jsr310-2.9.5.jar validation-api-2.0.1.Final.
- jar tomcat-embed-core-8.5.29.jar tomcat-embed-websocket-8.5.29.jar as
- pectjweaver-1.8.13.jar spring-boot-starter-aop-2.0.1.RELEASE.jar spri
- ng-boot-starter-tomcat-2.0.1.RELEASE.jar spring-boot-autoconfigure-2.
- 0.1.RELEASE.jar spring-aspects-5.0.5.RELEASE.jar mysql-connector-java
- -5.1.46.jar jboss-logging-3.3.2.Final.jar
+Class-Path: tomcat-embed-el-8.5.29.jar logback-classic-1.2.3.jar happy
+ -dns-java-0.1.6.jar dom4j-1.6.1.jar shiro-core-1.2.4.jar jackson-anno
+ tations-2.9.0.jar slf4j-api-1.7.25.jar spring-aop-5.0.5.RELEASE.jar j
+ avax.annotation-api-1.3.2.jar classmate-1.3.4.jar jandex-2.0.3.Final.
+ jar mysql-connector-java-5.1.46.jar logback-core-1.2.3.jar spring-orm
+ -5.0.5.RELEASE.jar joda-time-2.9.4.jar spring-aspects-5.0.5.RELEASE.j
+ ar spring-boot-starter-aop-2.0.1.RELEASE.jar spring-boot-starter-logg
+ ing-2.0.1.RELEASE.jar antlr-2.7.7.jar spring-webmvc-5.0.5.RELEASE.jar
+  jackson-core-2.9.5.jar thymeleaf-3.0.9.RELEASE.jar jboss-logging-3.3
+ .2.Final.jar jackson-datatype-jsr310-2.9.5.jar aspectjweaver-1.8.13.j
+ ar hibernate-jpa-2.1-api-1.0.0.Final.jar spring-boot-starter-web-2.0.
+ 1.RELEASE.jar thymeleaf-extras-java8time-3.0.1.RELEASE.jar spring-boo
+ t-starter-tomcat-2.0.1.RELEASE.jar gson-2.8.2.jar jackson-module-para
+ meter-names-2.9.5.jar spring-tx-5.0.5.RELEASE.jar spring-jcl-5.0.5.RE
+ LEASE.jar validation-api-2.0.1.Final.jar spring-boot-2.0.1.RELEASE.ja
+ r snakeyaml-1.19.jar jackson-datatype-jdk8-2.9.5.jar tomcat-embed-cor
+ e-8.5.29.jar commons-lang3-3.4.jar okio-1.13.0.jar qiniu-java-sdk-7.2
+ .11.jar spring-expression-5.0.5.RELEASE.jar spring-data-jpa-2.0.6.REL
+ EASE.jar okhttp-3.9.1.jar log4j-api-2.10.0.jar log4j-to-slf4j-2.10.0.
+ jar attoparser-2.0.4.RELEASE.jar spring-boot-starter-jdbc-2.0.1.RELEA
+ SE.jar spring-data-commons-2.0.6.RELEASE.jar spring-boot-starter-thym
+ eleaf-2.0.1.RELEASE.jar hibernate-commons-annotations-5.0.1.Final.jar
+  javax.transaction-api-1.2.jar spring-jdbc-5.0.5.RELEASE.jar spring-w
+ eb-5.0.5.RELEASE.jar tomcat-embed-websocket-8.5.29.jar spring-core-5.
+ 0.5.RELEASE.jar spring-boot-starter-data-jpa-2.0.1.RELEASE.jar thymel
+ eaf-spring5-3.0.9.RELEASE.jar spring-boot-autoconfigure-2.0.1.RELEASE
+ .jar hibernate-validator-6.0.9.Final.jar commons-beanutils-1.8.3.jar 
+ lombok-1.16.20.jar spring-boot-starter-json-2.0.1.RELEASE.jar jackson
+ -databind-2.9.5.jar spring-context-5.0.5.RELEASE.jar spring-beans-5.0
+ .5.RELEASE.jar jul-to-slf4j-1.7.25.jar unbescape-1.1.5.RELEASE.jar hi
+ bernate-core-5.2.16.Final.jar javassist-3.22.0-GA.jar spring-boot-sta
+ rter-2.0.1.RELEASE.jar HikariCP-2.7.8.jar
 Main-Class: com.cqc.backend.ChuangqingchunApplication
 

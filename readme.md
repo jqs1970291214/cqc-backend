@@ -1,13 +1,24 @@
 # cqc backend 
  
 ## instruction
-- spring-boot 架构
+- spring-boot 1.5
+- jpa
 - 使用lombok插件，需要在ide安装一下
-
-
-
-
+- 建表语句在createtable.sql
+- 后台入口/index
+## 碰到的坑
+- JPA自动生成的主键策略auto不稳定
+- 跨域问题
+- session丢失（每次ajax使用的sessionid不同造成登录状态丢失）
+- 其他
 ---
+## 待完善
+- 日志系统
+- swagger框架
+- 登录拦截器
+- jpa优化
+
+
 ##### 2018/4/13
 ##### author: junqson mengxin
 

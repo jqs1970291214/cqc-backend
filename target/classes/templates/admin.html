@@ -39,8 +39,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="admin.html"><a href="#">发布</a></li>
-                <li><a href="/del.html">删除</a></li>
+                <li class="/admin"><a href="#">发布</a></li>
+                <li><a href="/del">删除</a></li>
                 <li><a href="#contact">关于</a></li>
             </ul>
         </div><!--/.nav-collapse -->
@@ -112,6 +112,11 @@
 <!--页面js脚本-->
 <script>
 
+    $.ajaxSetup({
+        xhrFields:{
+            withCredentials:true
+        }
+    });
     var uptoken;
     var coverReady;
     function changeImage(){
@@ -145,6 +150,9 @@
         $.ajax({
             url:"http://upload-z2.qiniup.com",
             type:"POST",
+            xhrFields:{
+                withCredentials:true
+            },
             data:formData,
             async:false,
             cache:false,
@@ -178,6 +186,7 @@
 
     }
     $(document).ready(function(){
+
 
         $("#if").hide()
 

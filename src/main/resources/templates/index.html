@@ -3,8 +3,41 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>main page</title>
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
 </head>
 <body>
 <h1>Welcome!</h1>
+
+<label for="请输入密码"><input type="text" id="pass"/>
+</label>
+
+<button type="button" id="log-btn">登录</button>
+
+
+<script>
+
+    function login() {
+        var pass = document.getElementById("pass").value;
+        alert(pass);
+        $.post("http://127.0.0.1:8100/login",
+            {
+              pwd:pass
+            },
+            function(result){
+                console.log(result);
+                if(result.status == 200)
+                    location.href = "/admin";
+            },"json")
+    }
+    $.ajaxSetup({
+        xhrFields:{
+            withCredentials:true
+        }
+    })
+    $("#log-btn").click(login);
+
+
+</script>
 </body>
 </html>

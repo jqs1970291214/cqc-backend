@@ -1,5 +1,6 @@
 package com.cqc.backend.controller;
 
+import com.cqc.backend.exception.MyException;
 import com.cqc.backend.model.News;
 import com.cqc.backend.service.NewsService;
 import com.cqc.backend.util.ResultEnum;
@@ -7,10 +8,7 @@ import com.cqc.backend.util.ResultUtil;
 import com.cqc.backend.viewmodel.ApiResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
@@ -63,8 +61,8 @@ public class NewsController {
     }
 
     @RequestMapping(value = "/deleteByTitle",method = RequestMethod.POST)
-    public ApiResult deleteByTitle(@RequestParam("title") String title) {
-        //if (session.getAttribute("isOk") != "ok") throw new MyException(ResultEnum.LOGIN_REQUIRED);
+    public ApiResult deleteByTitle(@RequestParam("title") String title,HttpSession session) {
+        if (!"ok".equals(session.getAttribute("login").toString())) throw new MyException(ResultEnum.LOGIN_REQUIRED);
         News news = newsService.deleteByTitle(title);
         ApiResult result = ResultUtil.success();
         result.put("news",news);
@@ -73,11 +71,11 @@ public class NewsController {
     }
 
 
-    @RequestMapping(value = "/addNews",method = RequestMethod.POST)
+    @RequestMapping(value = "/addNews",method = {RequestMethod.POST,RequestMethod.GET})
     public ApiResult addNews(@RequestParam("title") String title, @RequestParam("type") String type,
                              @RequestParam(value = "cover",required = false,defaultValue = "#") String cover,
                              @RequestParam(value = "content",required = false) String content, HttpSession session) {
-        //if (session.getAttribute("isOk") != "ok") throw new MyException(ResultEnum.LOGIN_REQUIRED);
+        if (!"ok".equals(session.getAttribute("login").toString())) throw new MyException(ResultEnum.LOGIN_REQUIRED);
         if(StringUtils.isEmpty(title) || StringUtils.isEmpty(type)) {
             ApiResult apiResult = ResultUtil.error(ResultEnum.PARAM_EMPTY);
             return apiResult;
@@ -92,10 +90,18 @@ public class NewsController {
             news.setCover(cover);
             newsService.addNews(news);
             return ResultUtil.success();
+
         }
     }
 
+    @RequestMapping("logtest")
+    @ResponseBody
+    public String test(HttpSession session){
+        String s = session.getAttribute("login").toString();
+        return s;
 
+
+    }
 
 
 }

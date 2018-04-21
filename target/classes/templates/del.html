@@ -38,8 +38,8 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li ><a href="../templates/admin.html">发布</a></li>
-					<li class="active"><a href="del.html">删除</a></li>
+					<li ><a href="/admin">发布</a></li>
+					<li class="active"><a href="/admin">删除</a></li>
 					<li><a href="#contact">关于</a></li>
 				</ul>
 			</div><!--/.nav-collapse -->
@@ -115,6 +115,11 @@
 
 	<!--页面js脚本-->
     <script>
+        $.ajaxSetup({
+            xhrFields:{
+                withCredentials:true
+            }
+        })
     	var deleteId
         function showDeleteModal(obj) {
 
@@ -198,7 +203,8 @@
                 type:"POST",
                 data:{
                     type:type
-                },success:function(returndata){
+                },
+                success:function(returndata){
                 	console.log("刷新列表状态： "+returndata.msg+" "+returndata.status)
                     $("#arclist").empty();
                     arclist(returndata);

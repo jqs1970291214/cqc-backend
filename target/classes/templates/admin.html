@@ -6,9 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>后台</title>
+    <title>Editor demo</title>
     <!--Jquery-->
     <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        $.ajaxSetup({crossDomain: true, xhrFields: {withCredentials: true}});
+
+
+        $.get("http://39.107.237.2:8100/status",function(returndata){
+            if (returndata.status != 200) {
+                location.href ="/index";
+            }
+        })
+    </script>
     <!--ckeditors-->
     <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
     <script language="javascript" src="plupload/js/plupload.full.min.js"></script>
@@ -18,8 +29,8 @@
     <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
     <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
     <!--[if lt IE 9]>
-      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
 
@@ -39,7 +50,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="/admin"><a href="#">发布</a></li>
+                <li class="active"><a href="#">发布</a></li>
                 <li><a href="/del">删除</a></li>
                 <li><a href="#contact">关于</a></li>
             </ul>
@@ -138,11 +149,9 @@
 
 <!--页面js脚本-->
 <script>
-    $.ajaxSetup({
-        xhrFields:{
-            withCredentials:true
-        }
-    });
+
+
+
     var uptoken;
     var coverReady;
     var arr1 = new Array(10);
@@ -183,6 +192,7 @@
             async:false,
             cache:false,
             contentType:false,
+            xhrFields: {withCredentials: false},
             processData:false,
             success:function(returndata){
                 console.log(" 封面图片上传成功 图片名"+returndata.key)
@@ -228,6 +238,7 @@
             cache:false,
             contentType:false,
             processData:false,
+            xhrFields: {withCredentials: false},
             success:function(returndata){
                 console.log(" 附件上传成功 文件名"+returndata.key)
                 alert("附件上传成功");
@@ -258,7 +269,7 @@
 
     $(document).ready(function(){
 
-        $("#if").hide()
+
 
         $.ajax({
             type: "GET",
@@ -318,9 +329,6 @@
 
 
 </script>
-
-
 </body>
-
 
 </html>

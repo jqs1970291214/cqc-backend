@@ -6,12 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>登录页</title>
+    <title>Editor demo</title>
     <!--Jquery-->
     <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <!--ckeditors-->
     <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
     <script language="javascript" src="plupload/js/plupload.full.min.js"></script>
+    <script type="text/javascript">
+        $.ajaxSetup({crossDomain: true, xhrFields: {withCredentials: true}});
+
+
+        $.get("http://39.107.237.2:8100/status",function(returndata){
+            if (returndata.status == 200) {
+                location.href ="/admin";
+            }
+        })
+    </script>
     <!-- Bootstrap -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://v3.bootcss.com/dist/css/bootstrap-theme.min.css" rel="stylesheet">
@@ -21,6 +31,7 @@
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 
 </head>
 <body>
@@ -81,12 +92,6 @@
 
 <!--页面js脚本-->
 <script>
-    $.ajaxSetup({
-        xhrFields:{
-            withCredentials:true
-        }
-    });
-
     function returnMsg(msg,type){
         if (type===0) {
             $("#scode").hide()
@@ -108,9 +113,6 @@
         if (username==="admin") {
             $.ajax({
                 url:"http://39.107.237.2:8100/login",
-/*
-                url:"http://127.0.0.1:8100/login",
-*/
                 type:"POST",
                 data:{
                     pwd:password,
@@ -121,9 +123,6 @@
                     }else{
                         returnMsg("登录失败，用户名或密码错误",1)
                     }
-                },
-                error:function () {
-                    returnMsg("系统错误")
                 }
             })
         }else{

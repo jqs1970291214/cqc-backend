@@ -3,127 +3,131 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
 	<title>Editor demo</title>
 	<!--Jquery-->
 	<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Bootstrap -->
+	<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://v3.bootcss.com/dist/css/bootstrap-theme.min.css" rel="stylesheet">
 	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
-    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
-    <!--[if lt IE 9]>
-      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-      
-    <![endif]-->
+	<script type="text/javascript">
+        $.ajaxSetup({crossDomain: true, xhrFields: {withCredentials: true}});
+
+        $.get("http://39.107.237.2:8100/status",function(returndata){
+            if (returndata.status != 200) {
+                location.href ="/index";
+            }
+        })
+	</script>
+	<!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+	<!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+	<!--[if lt IE 9]>
+	<script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+
+	<![endif]-->
 
 </head>
 <body>
-	<!-- Fixed navbar -->
-	<nav class="navbar navbar-inverse navbar-static-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#">创青春大赛官网内容发布系统</a>
-			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li ><a href="/admin">发布</a></li>
-					<li class="active"><a href="/admin">删除</a></li>
-					<li><a href="#contact">关于</a></li>
-				</ul>
-			</div><!--/.nav-collapse -->
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-static-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">创青春大赛官网内容发布系统</a>
 		</div>
-	</nav>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+				<li ><a href="/admin">发布</a></li>
+				<li class="active"><a href="/del">删除</a></li>
+				<li><a href="#contact">关于</a></li>
+			</ul>
+		</div><!--/.nav-collapse -->
+	</div>
+</nav>
 
 
 
-	<div class="container theme-showcase" role="main">
-        <div id="scode"></div>
-		<form role="form">
-			<div class="form-group">
-				<select id="deltypeselect" class="form-control">
-					<option value="99">——请选择类别——</option>
-						<option value="0">新闻</option>
-						<option value="1">通知</option>
-						<option value="11">农林、畜牧、食品及相关产业</option>
-						<option value="12">化工技术和环境科学</option>
-						<option value="13">生物医药</option>
-						<option value="14">信息技术和电子商务</option>
-						<option value="15">材料</option>
-						<option value="16">机械能源</option>
-						<option value="17">文化创意和服务咨询</option>
-						<option value="18">公益创业</option>
-				</select>
-			</div>
-		</form>
-        <button class="btn btn btn-primary" id="delsubmit">获取文章列表</button>
-        <br>
-		<table class="table table-striped" style="display:none;" id="list">
-			<thead  >
-			<tr>
-                <th>文章id</th>
-				<th>标题</th>
-				<th>添加时间</th>
-				<th>封面</th>
-                <th></th>
-			</tr>
-			</thead>
-			<tbody id="arclist">
+<div class="container theme-showcase" role="main">
+	<div id="scode"></div>
+	<form role="form">
+		<div class="form-group">
+			<select id="deltypeselect" class="form-control">
+				<option value="99">——请选择类别——</option>
+				<option value="0">新闻</option>
+				<option value="1">通知</option>
+				<option value="11">农林、畜牧、食品及相关产业</option>
+				<option value="12">化工技术和环境科学</option>
+				<option value="13">生物医药</option>
+				<option value="14">信息技术和电子商务</option>
+				<option value="15">材料</option>
+				<option value="16">机械能源</option>
+				<option value="17">文化创意和服务咨询</option>
+				<option value="18">公益创业</option>
+			</select>
+		</div>
+	</form>
+	<button class="btn btn btn-primary" id="delsubmit">获取文章列表</button>
+	<br>
+	<table class="table table-striped" style="display:none;" id="list">
+		<thead  >
+		<tr>
+			<th>文章id</th>
+			<th>标题</th>
+			<th>添加时间</th>
+			<th>封面</th>
+			<th></th>
+		</tr>
+		</thead>
+		<tbody id="arclist">
 
-			</tbody>
-		</table>
+		</tbody>
+	</table>
 
-		<!-- 模态框   信息删除确认 -->
-		<div class="modal fade" id="delcfmOverhaul">
-			<div class="modal-dialog">
-				<div class="modal-content message_align">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-							<span aria-hidden="true">×</span>
-						</button>
-						<h4 class="modal-title">提示</h4>
-					</div>
-					<div class="modal-body">
-						<!-- 隐藏需要删除的id -->
-						<p>您确认要删除该条信息吗？</p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default"
-								data-dismiss="modal">取消</button>
-						<button type="button" class="btn btn-primary"
-                                data-dismiss="modal" id="deleteHaulBtn">确认</button>
-					</div>
+	<!-- 模态框   信息删除确认 -->
+	<div class="modal fade" id="delcfmOverhaul">
+		<div class="modal-dialog">
+			<div class="modal-content message_align">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title">提示</h4>
 				</div>
-				<!-- /.modal-content -->
+				<div class="modal-body">
+					<!-- 隐藏需要删除的id -->
+					<p>您确认要删除该条信息吗？</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default"
+							data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary"
+							data-dismiss="modal" id="deleteHaulBtn">确认</button>
+				</div>
 			</div>
-			<!-- /.modal-dialog -->
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
 
 	</div>
 
 
 	<!--页面js脚本-->
-    <script>
-        $.ajaxSetup({
-            xhrFields:{
-                withCredentials:true
-            }
-        })
-    	var deleteId
+	<script>
+        var deleteId
         function showDeleteModal(obj) {
 
-             deleteId = $(obj).parent().siblings('.title').text()
+            deleteId = $(obj).parent().siblings('.title').text()
             $("#delcfmOverhaul").modal({
                 backdrop : 'static',
                 keyboard : false
@@ -138,30 +142,30 @@
                     title:title
                 },
                 success:function(returndata){
-                	console.log("删除文章状态： "+returndata.msg+" "+returndata.status)
-                	if (returndata.status===200) {
-                		getList2($("#deltypeselect").val())
-						returnMsg("文章删除成功",0)
-                	}else{
-                		returnMsg("文章删除失败",1)
-                	}
+                    console.log("删除文章状态： "+returndata.msg+" "+returndata.status)
+                    if (returndata.status===200) {
+                        getList2($("#deltypeselect").val())
+                        returnMsg("文章删除成功",0)
+                    }else{
+                        returnMsg("文章删除失败",1)
+                    }
                     /* alert(returndata.data.newsList[1].title);*/
                 },
                 error:function(){
-                	alert("通信失败，请检查网络连接");
+                    alert("通信失败，请检查网络连接");
                 }
             })
         }
 
         function returnMsg(msg,type){
-        	if (type===0) {
-        		$("#scode").hide()
-        		$("#scode").html("<div class=\"alert alert-success\" role=\"alert\" id=\"#scode\" >"+msg+"</div>");
-        		$("#scode").show("fast");
-        	}else{
-        		$("#scode").html("<div class=\"alert alert-danger\" role=\"alert\" id=\"#scode\" >"+msg+"</div>");
-        		$("#scode").show("fast");
-        	}
+            if (type===0) {
+                $("#scode").hide()
+                $("#scode").html("<div class=\"alert alert-success\" role=\"alert\" id=\"#scode\" >"+msg+"</div>");
+                $("#scode").show("fast");
+            }else{
+                $("#scode").html("<div class=\"alert alert-danger\" role=\"alert\" id=\"#scode\" >"+msg+"</div>");
+                $("#scode").show("fast");
+            }
 
         }
 
@@ -170,9 +174,9 @@
                 $("#arclist").append("<tr><td>"+returnData.data.newsList[i].id+"</td><td class=\"title\">"+returnData.data.newsList[i].title+"</td><td>"+returnData.data.newsList[i].time+"</td><td><img  value=\"test\" src=\""+returnData.data.newsList[i].cover+"\"></td><td><button  type=\"button\"  class=\"btn btn-sm btn-danger\"  data-toggle=\"modal\" data-target=\"#myModal\" onclick=\"showDeleteModal(this)\">删除</button></td></td></tr>")
             }
             $("#list").show();
-		}
+        }
 
-		function getList(type){
+        function getList(type){
             $.ajax({
                 url:"http://39.107.237.2:8100/newsList",
                 type:"POST",
@@ -180,55 +184,54 @@
                     type:type
                 },
                 success:function(returndata){
-                	console.log("获取文章列表状态"+returndata.msg+" "+returndata.status+"获取文章数"+returndata.data.total)
-                	if (returndata.status==200) {
-                		returnMsg("文章列表获取成功",0)
-                    	$("#arclist").empty();
-                    	arclist(returndata);
-                	}else{
-                		returnMsg("文章列表获取失败",1)
-                	}
-                    
+                    console.log("获取文章列表状态"+returndata.msg+" "+returndata.status+"获取文章数"+returndata.data.total)
+                    if (returndata.status==200) {
+                        returnMsg("文章列表获取成功",0)
+                        $("#arclist").empty();
+                        arclist(returndata);
+                    }else{
+                        returnMsg("文章列表获取失败",1)
+                    }
+
                     /* alert(returndata.data.newsList[1].title);*/
                 },
                 error:function(){
                     alert("文章列表获取失败，请检查网络状态");
                 }
             })
-		}
+        }
 
-		function getList2(type){
+        function getList2(type){
             $.ajax({
                 url:"http://39.107.237.2:8100/newsList",
                 type:"POST",
                 data:{
                     type:type
-                },
-                success:function(returndata){
-                	console.log("刷新列表状态： "+returndata.msg+" "+returndata.status)
+                },success:function(returndata){
+                    console.log("刷新列表状态： "+returndata.msg+" "+returndata.status)
                     $("#arclist").empty();
                     arclist(returndata);
                     /* alert(returndata.data.newsList[1].title);*/
                 },
-                
+
             })
-		}
+        }
 
 
-		$(document).ready(function(){
-			$("#deleteHaulBtn").click(function (){
-			    removeArc(deleteId);
+        $(document).ready(function(){
+            $("#deleteHaulBtn").click(function (){
+                removeArc(deleteId);
                 $('#myModal').modal('hide')
-                })
+            })
 
             $("#delsubmit").click(
                 function () {
                     var type = $("#deltypeselect").val();
-					if (type==="99"){alert("请选择类别后提交")} else{
+                    if (type==="99"){alert("请选择类别后提交")} else{
                         getList(type);
-					}
+                    }
                 }
-			)
+            )
 
 
             /*$("#delsubmit").click(function () {
@@ -252,7 +255,7 @@
                 }
 
             })*/
-		})
-	</script>			
+        })
+	</script>
 </body>
 </html>

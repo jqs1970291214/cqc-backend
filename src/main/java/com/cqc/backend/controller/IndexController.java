@@ -7,6 +7,7 @@ import com.cqc.backend.viewmodel.ApiResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,7 +32,7 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping("login")
+    @RequestMapping(value = "login")
     @ResponseBody
     public ApiResult login(@RequestParam(value = "pwd",required = false,defaultValue = "#") String password, HttpSession session){
         ApiResult result = ResultUtil.success();
@@ -46,18 +47,28 @@ public class IndexController {
         }
     }
 
+    @RequestMapping("/status")
+    @ResponseBody
+    public ApiResult test(HttpSession session){
+        Object code = session.getAttribute("login");
+        if(code == null || !"ok".equals(code.toString())){
+            return ResultUtil.error(ResultEnum.LOGIN_REQUIRED);
+        } else {
+            return ResultUtil.success();
+        }
+    }
+
+
     /**
      * 管理首页
      */
     @RequestMapping("/admin")
-    public String admin(HttpSession session){
-        if (!"ok".equals(session.getAttribute("login").toString())) throw new MyException(ResultEnum.LOGIN_REQUIRED);
+    public String admin(){
         return "admin";
     }
 
     @RequestMapping("/del")
-    public String del(HttpSession session){
-        if(session.getAttribute("login") != "ok") throw new MyException(ResultEnum.LOGIN_REQUIRED);
+    public String del(){
         return "del";
     }
 

@@ -2,42 +2,159 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>main page</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>登录页</title>
+    <!--Jquery-->
     <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <!--ckeditors-->
+    <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+    <script language="javascript" src="plupload/js/plupload.full.min.js"></script>
+    <!-- Bootstrap -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://v3.bootcss.com/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
 </head>
 <body>
-<h1>Welcome!</h1>
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">创青春大赛官网内容发布系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <!-- <ul class="nav navbar-nav">
+                <li class="admin.html"><a href="#">发布</a></li>
+                <li><a href="del.html">删除</a></li>
+                <li><a href="#contact">关于</a></li>
+            </ul> -->
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+<!--图片上传表单-->
 
-<label for="请输入密码"><input type="text" id="pass"/>
-</label>
 
-<button type="button" id="log-btn">登录</button>
+<div class="container theme-showcase" role="main">
 
 
+
+    <div class="container">
+        <div class="row row-centered">
+
+            <div class="well col-md-6 col-centered">
+
+                <h2>欢迎登录</h2>
+                <div id="scode"></div>
+                <form role="form">
+                    <div class="input-group input-group-md">
+                        <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
+                        <input type="text" class="form-control" id="userid" name="userid" placeholder="请输入用户名" value="admin" />
+                    </div>
+                    <div class="input-group input-group-md">
+                        <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码"  />
+                    </div>
+                    <br/>
+
+                </form>
+                <button class="btn btn-success btn-block" onclick="login()">登录</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<!--页面js脚本-->
 <script>
-
-    function login() {
-        var pass = document.getElementById("pass").value;
-        alert(pass);
-        $.post("http://127.0.0.1:8100/login",
-            {
-              pwd:pass
-            },
-            function(result){
-                console.log(result);
-                if(result.status == 200)
-                    location.href = "/admin";
-            },"json")
-    }
     $.ajaxSetup({
         xhrFields:{
             withCredentials:true
         }
-    })
-    $("#log-btn").click(login);
+    });
+
+    function returnMsg(msg,type){
+        if (type===0) {
+            $("#scode").hide()
+            $("#scode").html("<div class=\"alert alert-success\" role=\"alert\" id=\"#scode\" >"+msg+"</div>");
+            $("#scode").show("fast");
+        }else{
+            $("#scode").html("<div class=\"alert alert-danger\" role=\"alert\" id=\"#scode\" >"+msg+"</div>");
+            $("#scode").show("fast");
+        }
+
+    }
+
+
+    function login(){
+        var username = $("#userid").val()
+        var password = $("#password").val()
+
+
+        if (username==="admin") {
+            $.ajax({
+                url:"http://39.107.237.2:8100/login",
+/*
+                url:"http://127.0.0.1:8100/login",
+*/
+                type:"POST",
+                data:{
+                    pwd:password,
+                },
+                success:function(returndata){
+                    if (returndata.status == 200) {
+                        window.location.href="/admin"
+                    }else{
+                        returnMsg("登录失败，用户名或密码错误",1)
+                    }
+                },
+                error:function () {
+                    returnMsg("系统错误")
+                }
+            })
+        }else{
+            returnMsg("登录失败，用户名错误",1)
+        }
+
+    }
 
 
 </script>
+<style type="text/css">
+    .container{
+        display:table;
+        height:100%;
+    }
+
+    .row{
+        display: table-cell;
+        vertical-align: middle;
+    }
+    /* centered columns styles */
+    .row-centered {
+        text-align:center;
+    }
+    .col-centered {
+        display:inline-block;
+        float:none;
+        text-align:left;
+        margin-right:-4px;
+    }
+
+</style>
 </body>
 </html>

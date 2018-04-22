@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>Editor demo</title>
+    <title>后台</title>
     <!--Jquery-->
     <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <!--ckeditors-->
@@ -46,7 +46,6 @@
         </div><!--/.nav-collapse -->
     </div>
 </nav>
-<!--图片上传表单-->
 
 
 <div class="container theme-showcase" role="main">
@@ -80,15 +79,15 @@
     <!--图片上传表单-->
     <div class="alert alert-info" role="alert" id="hiddencover" style="display:none;" >
         <div><strong>请上传新闻封面，如无封面，请不要上传，封面将显示默认图片</strong></br></div>
-        <form enctype="multipart/form-data" method="POST" id="uploadForm" role="form" class="form-inline">
-            <input name="token" type="hidden" value="" id="token">
-            <input name="key" type="hidden" id="key" value="">
+        <form enctype="multipart/form-data" method="POST" id="uploadFormcover" role="form" class="form-inline">
+            <input name="token" type="hidden" value="" class="token">
+            <input name="key" type="hidden" id="coverkey" value="">
             <input name="accept" type="hidden" />
             <div class="form-group">
-                <input name="file" type="file" id="file" class="form-control" onchange="changeImage()"/>
+                <input name="file" type="file" id="cover" class="form-control" onchange="changeImage()"/>
             </div>
 
-            <input type="button" value="上传" id="upcover" class="btn btn-primary" onclick="doUpload()" />
+            <input type="button" value="上传" class="btn btn-primary" onclick="doUploadcover()" />
         </form>
     </div>
     <!--图片上传结束-->
@@ -98,20 +97,47 @@
             <textarea id="TextArea1" cols="20" rows="2" class="ckeditor"></textarea>
         </div>
     </form>
+    <br>
+
+
+
+    <div>
+        <strong>
+            请添加附件：(建议文件名不多于18个汉字)
+        </strong>
+
+    </div>
+    <!-- 附件上传 -->
+
+    <form enctype="multipart/form-data" method="POST" id="uploadFormfile" role="form" class="form-inline">
+        <input name="token" type="hidden" value="" class="token">
+        <input name="key" type="hidden" id="filekey" value="">
+        <input name="accept" type="hidden" />
+        <div class="form-group">
+            <input name="file" type="file" id="file" class="form-control" onchange="changefile()"/>
+        </div>
+
+        <input type="button" value="上传"  class="btn btn-primary" onclick="doUploadfile()" />
+    </form>
+    <div class="row">
+        <div class="col-sm-4">
+            <ul class="list-group" id="filelist">
+
+            </ul>
+        </div>
+
+    </div>
+
+
+    <!-- 附件上传结束 -->
+
+    <br>
     <button class="btn btn-success" id="submit">提交编辑内容</button>
 
-    <!--
-            <p>删除文章</p><br>
-            <select id="deltypeselect">
-                <option  value="0">请选择类别</option>
-                <option value="13">生物医药</option>
-            </select>
-            <button class="btn btn-lg btn-primary" id="delsubmit">获取文章列表</button><br> -->
 </div>
 
 <!--页面js脚本-->
 <script>
-
     $.ajaxSetup({
         xhrFields:{
             withCredentials:true
@@ -119,8 +145,11 @@
     });
     var uptoken;
     var coverReady;
+    var arr1 = new Array(10);
+    var i = 0;
+
     function changeImage(){
-        var path = $("#file").val()
+        var path = $("#cover").val()
         var test1 = path.lastIndexOf("/");  //对路径进行截取
         var test2 = path.lastIndexOf("\\");  //对路径进行截取
         var test= Math.max(test1, test2)
@@ -129,7 +158,7 @@
         }else{
             var name = path.substring(test + 1)
         }
-        $("#key").val(name)
+        $("#coverkey").val(name)
 
         coverReady = name
     }
@@ -145,14 +174,11 @@
         }
     }
     var cover ="#";
-    function doUpload(){
-        var formData = new FormData($("#uploadForm")[0]);
+    function doUploadcover(){
+        var formData = new FormData($("#uploadFormcover")[0]);
         $.ajax({
             url:"http://upload-z2.qiniup.com",
             type:"POST",
-            xhrFields:{
-                withCredentials:true
-            },
             data:formData,
             async:false,
             cache:false,
@@ -168,9 +194,56 @@
                 alert("请重试或尝试刷新页面后重新上传");
             }
         });
+
+    }
+    /*此处是文件上传方法*/
+
+    function changefile(){
+        var path = $("#file").val()
+        var test1 = path.lastIndexOf("/");  //对路径进行截取
+        var test2 = path.lastIndexOf("\\");  //对路径进行截取
+        var test= Math.max(test1, test2)
+        if(test<0){
+            var name = path;
+        }else{
+            var name = path.substring(test + 1)
+        }
+        $("#filekey").val(name)
+
+
+    }
+    function deleteArr(data){
+        $(data).parent().remove();
+        arr1[$(data).parent().val()] = 0;
+        alert("删除成功")
+    }
+
+    function doUploadfile(){
+        var formData = new FormData($("#uploadFormfile")[0]);
+        $.ajax({
+            url:"http://upload-z2.qiniup.com",
+            type:"POST",
+            data:formData,
+            async:false,
+            cache:false,
+            contentType:false,
+            processData:false,
+            success:function(returndata){
+                console.log(" 附件上传成功 文件名"+returndata.key)
+                alert("附件上传成功");
+                $("#file").val("");
+                $("#filelist").append("<li class=\"list-group-item\" id=\"file"+i+"\" value=\""+i+"\"><span >"+"附件"+(i+1)+":"+returndata.key+"</span><a style=\"float: right;\" onclick=\"deleteArr(this)\">删除</a>"+"</li>")
+                arr1[i] = returndata.key;
+                i++;
+            },
+            error:function(){
+                alert("请重试或尝试刷新页面后重新上传");
+            }
+        });
     }
 
 
+    /*文件上传方法结束*/
     function returnMsg(msg,type){
         if (type===0) {
             $("#scode").html("<div class=\"alert alert-success\" role=\"alert\" id=\"#scode\" >"+msg+"</div>");
@@ -182,11 +255,8 @@
 
     }
 
-    function arclist(){
 
-    }
     $(document).ready(function(){
-
 
         $("#if").hide()
 
@@ -201,11 +271,18 @@
 
 
         /*alert(uptoken)*/
-        $("#token").val(uptoken)
+        $(".token").val(uptoken)
         $("#submit").click(function(){
             var data = CKEDITOR.instances.TextArea1.getData();
             var title = document.getElementById("title").value;
             var type = document.getElementById("type").value;
+            var n = 1;
+            for(var j=0;j<i;j++){
+                if (arr1[j]!==0) {
+                    data+="附件"+n+":"+"<a href=\""+"http://p76buwmyf.bkt.clouddn.com/"+arr1[j]+"\">点击下载</a><br>";
+                    n++
+                }
+            }
             if (cover ==="#") {
                 cover ="cover.jpg"
             }
@@ -242,6 +319,8 @@
 
 </script>
 
+
 </body>
+
 
 </html>

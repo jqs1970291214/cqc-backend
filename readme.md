@@ -23,7 +23,8 @@
 - jpa优化
 - session过期时间调整
 - 未使用足够thymeleaf特性 
-
+- git上传精简（ignore）
+- 服务器端maven联动github自动部署
 
 ##### 2018/4/13
 ##### author: junqson mengxin

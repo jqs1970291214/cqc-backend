@@ -62,7 +62,7 @@ public class NewsController {
 
     @RequestMapping(value = "/deleteByTitle",method = RequestMethod.POST)
     public ApiResult deleteByTitle(@RequestParam("title") String title,HttpSession session) {
-        if (!"ok".equals(session.getAttribute("login").toString())) throw new MyException(ResultEnum.LOGIN_REQUIRED);
+        if (session.getAttribute("login") == null && !"ok".equals(session.getAttribute("login"))) throw new MyException(ResultEnum.LOGIN_REQUIRED);
         News news = newsService.deleteByTitle(title);
         ApiResult result = ResultUtil.success();
         result.put("news",news);
@@ -75,7 +75,7 @@ public class NewsController {
     public ApiResult addNews(@RequestParam("title") String title, @RequestParam("type") String type,
                              @RequestParam(value = "cover",required = false,defaultValue = "#") String cover,
                              @RequestParam(value = "content",required = false) String content, HttpSession session) {
-        if (!"ok".equals(session.getAttribute("login").toString())) throw new MyException(ResultEnum.LOGIN_REQUIRED);
+        if (session.getAttribute("login") == null && !"ok".equals(session.getAttribute("login"))) throw new MyException(ResultEnum.LOGIN_REQUIRED);
         if(StringUtils.isEmpty(title) || StringUtils.isEmpty(type)) {
             ApiResult apiResult = ResultUtil.error(ResultEnum.PARAM_EMPTY);
             return apiResult;
@@ -94,14 +94,7 @@ public class NewsController {
         }
     }
 
-    @RequestMapping("logtest")
-    @ResponseBody
-    public String test(HttpSession session){
-        String s = session.getAttribute("login").toString();
-        return s;
 
-
-    }
 
 
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class NewsController {
         for(News news : newsList) {
             news.setContent("");
         }
+        Collections.sort(newsList);
         apiResult.put("total",newsList.size());
         apiResult.put("newsList",newsList);
         return apiResult;

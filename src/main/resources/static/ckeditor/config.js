@@ -43,7 +43,7 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'about', groups: [ 'about' ] }
 		];
 
-		config.removeButtons = 'Source,Save,NewPage,Preview,Print,Templates,Copy,PasteFromWord,Find,Replace,SelectAll,Form,Radio,TextField,Textarea,Select,ImageButton,HiddenField,Button,Checkbox,Subscript,Superscript,Strike,Underline,RemoveFormat,CreateDiv,Blockquote,Language,Anchor,CodeSnippet,Flash,Smiley,SpecialChar,PageBreak,Iframe,Code,BGColor,Styles,ShowBlocks,Maximize,Cut';
+		config.removeButtons = 'Source,Save,NewPage,Preview,Print,Templates,Copy,PasteFromWord,Find,Replace,SelectAll,Form,Radio,TextField,Textarea,Select,ImageButton,HiddenField,Button,Checkbox,Subscript,Superscript,Strike,Underline,RemoveFormat,CreateDiv,Language,Anchor,CodeSnippet,Flash,Smiley,SpecialChar,PageBreak,Iframe,Code,BGColor,Styles,ShowBlocks,Cut';
 				
 	
 	

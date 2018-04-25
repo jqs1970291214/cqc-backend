@@ -20,7 +20,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 
-public class News{
+public class News implements Comparable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer id;
@@ -42,4 +42,12 @@ public class News{
         this.content = "";
     }
 
+
+    @Override
+    public int compareTo(Object o) {
+        News news = (News) o;
+        int r = news.getTime().compareTo(this.getTime());
+        if(r == 0) r = news.id - this.id;
+        return  r;
+    }
 }
